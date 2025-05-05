@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 99
+typedef struct node{
+	int vertex;
+	struct node* next;
+}*GNODE;
+
+// Write your code here...
+int queue[MAX],front=-1,rear=-1;
+void enqueue(int v){
+	if(rear==MAX-1){
+		printf("Queue overflow\n");
+	}
+	else{
+		if(front==-1)
+			front=0;
+		rear++;
+		queue[rear]=v;
+	}
+}
+int dequeue(){
+	int val;
+	if(front==-1||front>rear)
+		return -1;
+	val = queue[front];
+	front++;
+	return val;
+}
+int isEmpty(){
+	return front == -1 ||front>rear;
+}
+GNODE graph[MAX];
+int visited[MAX];
+void BFS(int start){
+	int v;
+	GNODE p;
+	visited[start]=1;
+	enqueue(start);
+	while(!isEmpty()){
+		v = dequeue();
+		printf("\n%d",v);
+for(p=graph[v];p!=NULL;p=p->next){
+			if(!visited[p->vertex]){
+				enqueue(p->vertex);
+				visited[p->vertex]=1;
+			}
+		}
+	}
+}		
